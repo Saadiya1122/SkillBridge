@@ -16,7 +16,7 @@
 
 After cloning the repository, you need to manually create two folders to organize the files:
 
-1. **Create a `templates` folder:**
+1. Create a `templates` folder:
    - This folder should contain the HTML files.
    - Upload the following files into the `templates` folder:
      - `landing.html`
@@ -28,7 +28,7 @@ After cloning the repository, you need to manually create two folders to organiz
    ```bash
    mkdir templates
 
-2. **Create a static folder:**
+2. Create a static folder:
 
 This folder should contain static assets like CSS files and videos.
 Upload the following files into the static folder:
@@ -48,18 +48,18 @@ mkdir static
 - Flask (for running the web application)
 
 ### Steps to Install and Run:
-1. **Clone the repository:**
+1. Clone the repository:
    
    ```bash
    git clone https://github.com/your-username/SkillBridge.git
    cd SkillBridge
    
-3. **Install required Packages:**
+2. Install required Packages:
 
 Make sure you have Python installed, then install the required libraries by running :
 pip install -r requirements.txt
    
-4. **Run the application:**
+3. Run the application:
 
 Once the dependencies are installed, run the Flask application:
 python app.py 
