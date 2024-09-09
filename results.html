@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Video background container */
+        .video-container {
+            position: fixed; /* Keep the video fixed as you scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+ 
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire screen */
+        }
+ 
+        /* Result container styling */
+        .results-container {
+            background: linear-gradient(135deg, #D9C9F3, #FFFFFF); /* Correctly applied gradient */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            width: 95%;
+            margin: 40px auto;
+            color: #4B2C54;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            z-index: 1; /* Ensures the text is above the video */
+        }
+ 
+        .results-container h3 {
+            color: #4B2C54;
+            font-family: 'Abril Fatface', cursive;
+            margin-bottom: 20px;
+            margin-top: 30px;
+            font-size: 1.5rem;
+        }
+ 
+        .results-container h4 {
+            margin-top: 25px;
+            margin-bottom: 20px;
+            color: #4B2C54;
+            font-family: 'Roboto Slab', serif;
+            font-size: 1.4rem;
+        }
+ 
+        .results-container p {
+            margin-bottom: 15px;
+        }
+ 
+        .results-container ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+ 
+        .results-container ul li {
+            margin-bottom: 8px;
+        }
+ 
+        .results-container a {
+            color: #4B2C54;
+            text-decoration: none;
+            border-bottom: 1px solid #4B2C54;
+            padding-bottom: 2px;
+            margin-bottom: 20px;
+            display: block;
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            font-size: 1.1rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+ 
+        .results-container a:hover {
+            color: #6B2D5C;
+            border-bottom-color: #6B2D5C;
+            background-color: #FFFFFF;
+            border-radius: 4px;
+            padding: 4px;
+            display: inline-block;
+        }
+ 
+        .results-container ul li:last-child {
+            margin-bottom: 30px;
+        }
+ 
+          /* Prevent splitting inside containers */
+        
+        .results-container {
+            page-break-inside: avoid;
+        }
+ 
+        /* Ensure headers are not split between pages */
+        h3, h4 {
+            page-break-before: avoid;
+            page-break-inside: avoid;
+        }
+ 
+        /* Ensure paragraphs and lists aren't split */
+        p, ul, li {
+            page-break-inside: avoid;
+        }
+ 
+ 
+        /* Body styling */
+        body {
+            margin: 0;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+ 
+        /* Heading outside the box */
+        .heading-outside-box {
+            text-align: center;
+            font-family: 'Abril Fatface', cursive;
+            font-size: 2rem;
+            color: #ffffff;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+ 
+        /* Ensure the entire page can scroll */
+        section {
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+ 
+        /* Buttons section at the bottom of the results */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Add space between buttons */
+            margin-top: 20px; /* Add space above the buttons */
+        }
+ 
+        .button-container button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-family: 'Arial', sans-serif;
+            color: #FFFFFF;
+            background-color: #905edf;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+ 
+        .button-container button:hover {
+            background-color: #905edf;
+        }
+    </style>
+ 
+    <!-- Include html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Video Background -->
+    <section id="background">
+        <div class="video-container">
+            <video id="background-video" autoplay loop muted>
+                <source src="{{ url_for('static', filename='loop_video.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+ 
+        <!-- Heading outside the box -->
+        <div class="heading-outside-box"><b>Your Missing Skills Report</b></div>
+ 
+        <div class="results-container" id="results">
+            <!-- Displaying resume text first -->
+            <h3>Your Resume Text:</h3>
+            <p>{{ resume_text }}</p>
+ 
+            <!-- Displaying job description text next -->
+            <h3>Job Description:</h3>
+            <p>{{ job_description_text }}</p>
+ 
+            <!-- Displaying Resume Skills -->
+            <h3>Resume Skills:</h3>
+            <ul>
+                {% for skill in resume_skills %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+ 
+            <!-- Displaying Job Description Skills -->
+            <h3>Job Description Skills:</h3>
+            <ul>
+                {% for skill in job_description_skills %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+ 
+            <!-- Displaying Matching Skills -->
+            <h3>Matching Skills:</h3>
+            <ul>
+                {% for skill in matching_skills %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+ 
+            <!-- Displaying Missing Skills -->
+            <h3>Missing Skills:</h3>
+            <ul>
+                {% for skill in missing_skills %}
+                <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+ 
+            <!-- Displaying Recommended Courses for Missing Skills -->
+            <h3>Recommended Courses for Missing Skills:</h3>
+            {% for skill, resources in recommended_courses.items() %}
+            <h4>{{ skill }}</h4>
+            <p>Articles:</p>
+            <ul>
+                {% for article in resources.articles %}
+                <li><a href="{{ article }}" target="_blank">{{ article }}</a></li>
+                {% endfor %}
+            </ul>
+            <p>Videos:</p>
+            <ul>
+                {% for video in resources.videos %}
+                <li><a href="{{ video }}" target="_blank">{{ video }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endfor %}
+        </div>
+ 
+        <!-- Buttons at the bottom of the page -->
+        <div class="button-container">
+            <button onclick="goBack()">Go Back</button>
+            <button onclick="downloadPDF()">Download as PDF</button>
+        </div>
+    </section>
+ 
+    <!-- JS here -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+ 
+        function downloadPDF() {
+            const element = document.getElementById('results');
+            html2pdf()
+                .set({
+                    margin: [10, 0, 10, 0],  // Top, left, bottom, right margins
+                    filename: 'analysis-report.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                })
+                .from(element)
+                .save();
+}
+ 
+    </script>
+</body>
+</html>

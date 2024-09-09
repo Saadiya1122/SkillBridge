@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Your Resume</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-container">
+        <video id="background-video" autoplay loop muted>
+            <source src="{{ url_for('static', filename='loop_video.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+ 
+    <section class="form-section">
+        <div class="form-container">
+            <h2 class="form-title">Analyze Your Resume</h2>
+            {% if show_form %}
+            <form id="analyzeForm" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="resume">Upload Resume (PDF, DOCX, HTML):</label>
+                    <input type="file" name="resume" id="resume" required>
+                </div>
+                <div class="form-group">
+                    <label for="job_description">Paste Job Description:</label>
+                    <textarea name="job_description" id="job_description" rows="6" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Analyze</button>
+            </form>
+ 
+            <!-- Loading message -->
+            <div id="loadingMessage" style="display: none; color: #000000; font-size: 1.5rem; text-align: center; margin-top: 20px;">
+                Generating results.....Please wait :)
+            </div>
+ 
+            <!-- Error message -->
+            <div id="errorMessage" style="display: none; color: red; font-size: 1.2rem; text-align: center; margin-top: 20px;">
+                Please upload a resume and paste a job description.
+            </div>
+ 
+            {% elif show_results %}
+            <div class="results-container">
+                <h3>Summary of Your Resume:</h3>
+                <p>{{ resume_text }}</p>
+                
+                <h3>Matching Skills:</h3>
+                <ul>
+                    {% for skill in matching_skills %}
+                    <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+ 
+                <h3>Missing Skills:</h3>
+                <ul>
+                    {% for skill in missing_skills %}
+                    <li>{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+ 
+                <h3>Recommended Courses for Missing Skills:</h3>
+                {% for skill, resources in recommended_courses.items() %}
+                <h4>{{ skill }}</h4>
+                <p>Articles:</p>
+                <ul>
+                    {% for article in resources.articles %}
+                    <li><a href="{{ article }}">{{ article }}</a></li>
+                    {% endfor %}
+                </ul>
+                <p>Videos:</p>
+                <ul>
+                    {% for video in resources.videos %}
+                    <li><a href="{{ video }}">{{ video }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p>Results will be displayed here after analysis.</p>
+            {% endif %}
+        </div>
+    </section>
+ 
+    <!-- JavaScript to show the loading message and form validation -->
+    <script>
+    function validateForm() {
+        const resumeInput = document.getElementById("resume").value;
+        const jobDescriptionInput = document.getElementById("job_description").value;
+ 
+        if (resumeInput === "" || jobDescriptionInput === "") {
+            // Show error message
+            document.getElementById("errorMessage").style.display = "block";
+            return false;
+        } else {
+            // Show loading message
+            document.getElementById("loadingMessage").style.display = "block";
+            // Hide form to prevent further submissions
+            document.getElementById("analyzeForm").style.display = "none";
+            return true;
+        }
+    }
+    </script>
+</body>
+</html>
+ 
+has context menu

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Abril+Fatface&display=swap" rel="stylesheet">
+    <title>SkillBridge - Welcome</title>
+</head>
+<body>
+    <!-- Landing Section -->
+    <section id="landing" class="video-container">
+        <video id="background-video" autoplay loop muted>
+            <source src="{{ url_for('static', filename='loop_video.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay">
+            <h1 class="main-title">SkillBridge</h1>
+            <p class="subtitle">Your Career Pathway</p>
+            <a href="{{ url_for('upload') }}" class="btn-get-started">Get Started</a>
+        </div>
+    </section>
+</body>
+</html>
+ 

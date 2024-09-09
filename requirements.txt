@@ -1,0 +1,11 @@
+pandas
+spacy
+scikit-learn
+imbalanced-learn
+PyPDF2
+requests
+google-search-python
+sumy
+seaborn
+matplotlib
+Flask
