@@ -12,6 +12,35 @@
 - Users can download a skill gap report in PDF format.
 - Real-time analysis and quick response for skill matching and gap identification.
 
+## Project Setup Instructions
+
+After cloning the repository, you need to manually create two folders to organize the files:
+
+1. **Create a `templates` folder:**
+   - This folder should contain the HTML files.
+   - Upload the following files into the `templates` folder:
+     - `landing.html`
+     - `upload.html`
+     - `analyze.html`
+     - `results.html`
+
+   You can create the folder via the terminal:
+   ```bash
+   mkdir templates
+
+2. **Create a static folder:**
+
+This folder should contain static assets like CSS files and videos.
+Upload the following files into the static folder:
+
+- style.css
+- loop_video.mp4
+
+To create the folder:
+
+```bash
+mkdir static
+
 ## Installation
 
 ### Prerequisites
@@ -34,7 +63,6 @@ pip install -r requirements.txt
 
 Once the dependencies are installed, run the Flask application:
 python app.py 
-
 
 
 ### How to Use the README:
